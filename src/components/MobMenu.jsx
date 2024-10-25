@@ -11,15 +11,15 @@ export default function MobMenu({ Menus }) {
 
   return (
     <div className="relative z-50">
-      {/* Menu toggle button */}
+     
       <button className="lg:hidden z-[999] relative" onClick={toggleDrawer}>
         {isOpen ? <X /> : <Menu />}
       </button>
 
-      {/* Mobile Menu Content */}
+     
       {isOpen && (
         <div
-          className="fixed inset-0 bg-white text-black flex flex-col items-center justify-center z-50"
+          className="fixed gap-[100px] inset-0 bg-white text-black flex flex-col items-center justify-center z-50"
           style={{ height: "100vh", width: "100vw" }}
         >
           <ul className="space-y-6 text-center">
@@ -28,7 +28,7 @@ export default function MobMenu({ Menus }) {
                 <Link
                   to={link}
                   className="text-xl"
-                  onClick={toggleDrawer} // Close menu on link click
+                  onClick={toggleDrawer}
                 >
                   {name}
                 </Link>

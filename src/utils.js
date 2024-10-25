@@ -31,5 +31,10 @@ export const Menus = [
     icon: History,
     link: "/trade-history",
   },
- 
+  {
+    name: "Testimonials",
+    desc: "Testimony from students.",
+    icon: MessageCircle, 
+    link: "/testimonials",
+  },
 ];

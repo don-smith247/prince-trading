@@ -23,15 +23,15 @@ const HeroSection = () => {
   }, []);
 
   const statsData = [
-    { icon: Users, value: '5000+', label: 'Active Students' },
-    { icon: Award, value: '95%', label: 'Success Rate' },
+    { icon: Users, value: '500+', label: 'Active Students' },
+    { icon: Award, value: '82%', label: 'Success Rate' },
     { icon: TrendingUp, value: '₦100M+', label: 'Student Profits' },
     { icon: BookOpen, value: '50+', label: 'Trading Courses' },
   ];
 
   return (
     <div className="relative bg-white overflow-hidden">
-      {/* Animated Background Elements */}
+      
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute w-[40vw] h-[40vw] bg-blue-100/50 rounded-full blur-3xl -top-48 -right-48 animate-pulse" />
         <div className="absolute w-[30vw] h-[30vw] bg-blue-50/50 rounded-full blur-2xl bottom-0 -left-20 animate-pulse delay-300" />
@@ -39,9 +39,9 @@ const HeroSection = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="pt-12 pb-16 lg:pt-20 lg:pb-24">
-          {/* Main Hero Content */}
+          
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Column - Text Content */}
+            
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -50 }}
@@ -79,7 +79,7 @@ const HeroSection = () => {
                 </motion.p>
               </div>
 
-              {/* CTA Buttons */}
+              
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -88,7 +88,7 @@ const HeroSection = () => {
               >
                 <button className="w-full md:w-auto px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold flex items-center gap-2 hover:bg-blue-700 transform hover:scale-105 transition-all duration-300">
                  <Link
-                    to="contact-us" // Link to the Contact Us section
+                    to="contact-us" 
                     className="get-started-button"
                     >
                     Get Started Now
@@ -96,28 +96,25 @@ const HeroSection = () => {
                   <ChevronRight className="w-5 h-5" />
                 </button>
                 
-                <button className="w-full md:w-auto px-8 py-4 bg-gray-100 text-gray-800 rounded-lg font-semibold flex items-center gap-2 hover:bg-gray-200 transform hover:scale-105 transition-all duration-300">
-                  <PlayCircle className="w-5 h-5" />
-                  Watch Demo
-                </button>
+               
               </motion.div>
             </motion.div>
 
-            {/* Right Column - Trading Chart Animation */}
+            
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 50 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="relative w-full h-[300px] sm:h-[400px] bg-gray-50 rounded-2xl backdrop-blur-xl p-6 border border-gray-200"
             >
-              {/* Add your trading chart component or image here */}
+             
               <img 
                 src="./trading.jpg" 
                 alt="Trading Chart" 
                 className="w-full h-full object-cover rounded-lg"
               />
               
-              {/* Floating Cards */}
+              
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -137,7 +134,7 @@ const HeroSection = () => {
             </motion.div>
           </div>
 
-          {/* Stats Section */}
+         
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}

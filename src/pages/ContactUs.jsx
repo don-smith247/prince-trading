@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Send, CheckCircle, DollarSign, Clock, User } from 'lucide-react';
 
-const ContactForm = () => {
+const ContactAndBusinessHours = () => {
+
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -26,7 +27,7 @@ const ContactForm = () => {
       fields: ['name', 'email', 'phone']
     },
     {
-      title: "Trading Background",
+      title: "Select Plans",
       icon: <Clock className="w-6 h-6" />,
       fields: ['tradingExperience', 'preferredMarket']
     },
@@ -40,10 +41,11 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1500)); 
     setIsSubmitting(false);
     setIsSubmitted(true);
     
+ 
     setTimeout(() => {
       setIsSubmitted(false);
       setFormState({
@@ -84,9 +86,8 @@ const ContactForm = () => {
               onChange={handleChange}
               className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 appearance-none"
             >
-              <option value="beginner">Beginner (0-1 years)</option>
-              <option value="intermediate">Intermediate (1-3 years)</option>
-              <option value="advanced">Advanced (3+ years)</option>
+              <option value="beginner">Basic Beginner Course (4 weeks)</option>
+              <option value="advanced">Advanced Course (8 weeks)</option>
             </select>
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
               <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -157,7 +158,6 @@ const ContactForm = () => {
     <div className={`w-full max-w-2xl mx-auto p-6 transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
       <div className={`bg-white rounded-xl shadow-lg p-6 md:p-8 transition-all duration-500 transform ${isSubmitted ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Progress Bar */}
           <div className="mb-8">
             <div className="flex justify-between mb-2">
               {formSections.map((section, index) => (
@@ -177,12 +177,10 @@ const ContactForm = () => {
             </div>
           </div>
 
-          {/* Form Section Title */}
           <h3 className="text-2xl font-bold text-center mb-6 transform transition-all duration-500">
             {formSections[currentStep].title}
           </h3>
 
-          {/* Form Fields */}
           <div className="space-y-6 transition-all duration-500 transform">
             {formSections[currentStep].fields.map((fieldName) => (
               <div key={fieldName} className="transition-all duration-500 transform">
@@ -191,7 +189,6 @@ const ContactForm = () => {
             ))}
           </div>
 
-          {/* Navigation Buttons */}
           <div className="flex justify-between gap-4 mt-8">
             <button
               type="button"
@@ -201,50 +198,59 @@ const ContactForm = () => {
             >
               Previous
             </button>
-            
+
             {currentStep === formSections.length - 1 ? (
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 py-3 px-6 rounded-lg text-white font-medium flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+                className="flex items-center justify-center px-6 py-3 rounded-lg font-medium bg-blue-600 text-white transition-all duration-300 transform hover:scale-105"
               >
-                {isSubmitting ? (
-                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
-                ) : (
-                  <>
-                    <Send size={20} /> Submit
-                  </>
-                )}
+                {isSubmitting ? <span className="animate-spin">Submitting...</span> : 'Submit'}
+                <Send className="ml-2" />
               </button>
             ) : (
               <button
                 type="button"
                 onClick={nextStep}
-                className="flex-1 py-3 px-6 rounded-lg text-white font-medium bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+                className="flex items-center justify-center px-6 py-3 rounded-lg font-medium bg-blue-600 text-white transition-all duration-300 transform hover:scale-105"
               >
                 Next
+                <span className="ml-2">
+                  <Send />
+                </span>
               </button>
             )}
           </div>
         </form>
+
+        {isSubmitted && (
+          <div className="flex items-center justify-center mt-4 text-green-600">
+            <CheckCircle className="w-6 h-6 mr-2" />
+            <span>Your message has been sent successfully!</span>
+          </div>
+        )}
       </div>
 
-      {/* Success Message */}
-      <div
-        className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-xl shadow-2xl transition-all duration-500 ${
-          isSubmitted ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
-        }`}
-      >
-        <div className="flex flex-col items-center gap-4 text-center">
-          <div className="animate-bounce">
-            <CheckCircle size={48} className="text-green-500" />
-          </div>
-          <h3 className="text-2xl font-semibold">Thank you!</h3>
-          <p className="text-gray-600">We'll get back to you soon.</p>
-        </div>
+     
+      <div className="mt-8 bg-white rounded-xl shadow-lg p-6 md:p-8">
+        <h2 className="text-xl font-bold mb-4">Business Hours</h2>
+        <ul className="space-y-4">
+          <li className="flex items-center">
+            <Clock className="w-6 h-6 text-blue-600 mr-2" />
+            <span>Monday to Friday: 9:00 AM - 6:00 PM</span>
+          </li>
+          <li className="flex items-center">
+            <Clock className="w-6 h-6 text-blue-600 mr-2" />
+            <span>Saturday: 10:00 AM - 4:00 PM</span>
+          </li>
+          <li className="flex items-center">
+            <Clock className="w-6 h-6 text-blue-600 mr-2" />
+            <span>Sunday: Closed</span>
+          </li>
+        </ul>
       </div>
     </div>
   );
 };
 
-export default ContactForm;
+export default ContactAndBusinessHours;
