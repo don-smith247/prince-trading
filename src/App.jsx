@@ -128,7 +128,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-3 text-gray-300">
                 <Mail className="w-5 h-5 text-blue-400" />
-                <p>princetradingacademy@gmail.com</p>
+                <p>muhammadauwallawal84@gmail.com</p>
               </div>
             </div>
 
@@ -189,9 +189,9 @@ export default function App() {
           <nav className="px-3.5 flex justify-between w-full max-w-7xl mx-auto">
           <div className="flex items-center gap-2">
               <TrendingUp className="w-8 h-8 text-blue-400" />
-              <h3 className="text-2xl font-bold leading-none">Prince Trading</h3>
-              <p>Academy</p>
-            </div>
+              <h3 className="text-2xl font-bold leading-none">Prince Trades</h3>
+              <p></p>
+          </div>
 
           
             <ul className="gap-x-1 font-bold lg:flex hidden">

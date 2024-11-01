@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Send, CheckCircle, DollarSign, Clock, User } from 'lucide-react';
+import { useForm, ValidationError } from '@formspree/react';
 
 const ContactAndBusinessHours = () => {
-
   const [formState, setFormState] = useState({
     name: '',
     email: '',
     phone: '',
     tradingExperience: 'beginner',
-    preferredMarket: 'stocks',
+    preferredMarket: 'crypto',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+
+  const [state, handleSubmit] = useForm("xldejwjo");
 
   useEffect(() => {
     setIsVisible(true);
@@ -37,28 +39,6 @@ const ContactAndBusinessHours = () => {
       fields: ['message']
     }
   ];
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1500)); 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
- 
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormState({
-        name: '',
-        email: '',
-        phone: '',
-        tradingExperience: 'beginner',
-        preferredMarket: 'stocks',
-        message: '',
-      });
-      setCurrentStep(0);
-    }, 2000);
-  };
 
   const handleChange = (e) => {
     setFormState({
@@ -154,10 +134,46 @@ const ContactAndBusinessHours = () => {
     }
   };
 
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    
+    const response = await handleSubmit({
+      name: formState.name,
+      email: formState.email,
+      phone: formState.phone,
+      tradingExperience: formState.tradingExperience,
+      preferredMarket: formState.preferredMarket,
+      message: formState.message,
+    });
+
+    if (response) {
+      setIsSubmitted(true);
+      
+      setTimeout(() => {
+        
+        setFormState({
+          name: '',
+          email: '',
+          phone: '',
+          tradingExperience: 'beginner',
+          preferredMarket: 'stocks',
+          message: '',
+        });
+      
+        setCurrentStep(0);
+        setIsSubmitted(false);
+      }, 2000); 
+    }
+
+    setIsSubmitting(false);
+  };
+
   return (
     <div className={`w-full max-w-2xl mx-auto p-6 transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
       <div className={`bg-white rounded-xl shadow-lg p-6 md:p-8 transition-all duration-500 transform ${isSubmitted ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmitForm} className="space-y-6">
           <div className="mb-8">
             <div className="flex justify-between mb-2">
               {formSections.map((section, index) => (
@@ -185,69 +201,51 @@ const ContactAndBusinessHours = () => {
             {formSections[currentStep].fields.map((fieldName) => (
               <div key={fieldName} className="transition-all duration-500 transform">
                 {renderField(fieldName)}
+                <ValidationError 
+                  prefix={fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} 
+                  field={fieldName} 
+                  errors={state.errors} 
+                />
               </div>
             ))}
           </div>
 
-          <div className="flex justify-between gap-4 mt-8">
-            <button
-              type="button"
-              onClick={prevStep}
-              className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105
-                ${currentStep === 0 ? 'opacity-0 pointer-events-none' : 'bg-gray-200 hover:bg-gray-300'}`}
-            >
-              Previous
-            </button>
-
-            {currentStep === formSections.length - 1 ? (
+          <div className="flex justify-between mt-8">
+            {currentStep > 0 && (
               <button
-                type="submit"
-                disabled={isSubmitting}
-                className="flex items-center justify-center px-6 py-3 rounded-lg font-medium bg-blue-600 text-white transition-all duration-300 transform hover:scale-105"
+                type="button"
+                onClick={prevStep}
+                className="py-2 px-4 bg-gray-300 text-gray-700 rounded-lg transition duration-300 hover:bg-gray-400"
               >
-                {isSubmitting ? <span className="animate-spin">Submitting...</span> : 'Submit'}
-                <Send className="ml-2" />
+                Back
               </button>
-            ) : (
+            )}
+            {currentStep < formSections.length - 1 ? (
               <button
                 type="button"
                 onClick={nextStep}
-                className="flex items-center justify-center px-6 py-3 rounded-lg font-medium bg-blue-600 text-white transition-all duration-300 transform hover:scale-105"
+                className="py-2 px-4 bg-blue-500 text-white rounded-lg transition duration-300 hover:bg-blue-600"
               >
                 Next
-                <span className="ml-2">
-                  <Send />
-                </span>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="py-2 px-4 bg-blue-500 text-white rounded-lg transition duration-300 hover:bg-blue-600"
+              >
+                {isSubmitting ? 'Sending...' : 'Submit'}
               </button>
             )}
           </div>
         </form>
 
         {isSubmitted && (
-          <div className="flex items-center justify-center mt-4 text-green-600">
-            <CheckCircle className="w-6 h-6 mr-2" />
-            <span>Your message has been sent successfully!</span>
+          <div className="mt-6 text-center text-green-600">
+            <CheckCircle className="inline-block w-6 h-6 mb-1" />
+            <p>Thank you! Your message has been sent successfully.</p>
           </div>
         )}
-      </div>
-
-     
-      <div className="mt-8 bg-white rounded-xl shadow-lg p-6 md:p-8">
-        <h2 className="text-xl font-bold mb-4">Business Hours</h2>
-        <ul className="space-y-4">
-          <li className="flex items-center">
-            <Clock className="w-6 h-6 text-blue-600 mr-2" />
-            <span>Monday to Friday: 9:00 AM - 6:00 PM</span>
-          </li>
-          <li className="flex items-center">
-            <Clock className="w-6 h-6 text-blue-600 mr-2" />
-            <span>Saturday: 10:00 AM - 4:00 PM</span>
-          </li>
-          <li className="flex items-center">
-            <Clock className="w-6 h-6 text-blue-600 mr-2" />
-            <span>Sunday: Closed</span>
-          </li>
-        </ul>
       </div>
     </div>
   );
