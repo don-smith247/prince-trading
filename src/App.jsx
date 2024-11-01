@@ -47,7 +47,7 @@ const Footer = () => {
           <div className="space-y-6 transform transition-all duration-500 hover:translate-y-[-5px]">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-8 h-8 text-blue-400" />
-              <h3 className="text-2xl font-bold">Prince Trading</h3>
+              <h3 className="text-2xl font-bold">Prince Trades</h3>
             </div>
             <p className="text-gray-300">
               Reinventing the way of cryptocurrency trading in Nigeria and beyond. Join us to master the art of trading.
